@@ -5,7 +5,11 @@ class ThemeToggle extends Component {
   static contextType = ThemeContext;
   render() {
     const { toggleTheme } = this.context;
-    return <button onClick={toggleTheme}>Toggle the theme</button>;
+    return (
+      <div>
+        <button onClick={toggleTheme}>Toggle the theme</button>
+      </div>
+    );
   }
 }
 

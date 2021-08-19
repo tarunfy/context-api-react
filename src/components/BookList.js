@@ -1,29 +1,40 @@
 import React, { Component } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
 
 class BookList extends Component {
   render() {
     return (
-      <ThemeContext.Consumer>
-        {(context) => {
-          const { isLightTheme, light, dark } = context;
-          const theme = isLightTheme ? light : dark;
+      <AuthContext.Consumer>
+        {(authContext) => {
           return (
-            <div
-              className="book-list"
-              style={{ color: theme.syntax, background: theme.bg }}
-            >
-              <ul>
-                <li style={{ background: theme.ui }}>The Way of kings</li>
-                <li style={{ background: theme.ui }}>
-                  Power of your subconcious mind
-                </li>
-                <li style={{ background: theme.ui }}>The Lean Startup</li>
-              </ul>
-            </div>
+            <ThemeContext.Consumer>
+              {(themeContext) => {
+                const { isAuthenticated, toggleAuth } = authContext;
+                const { isLightTheme, light, dark } = themeContext;
+                const theme = isLightTheme ? light : dark;
+                return (
+                  <div
+                    className="book-list"
+                    style={{ color: theme.syntax, background: theme.bg }}
+                  >
+                    <div onClick={toggleAuth}>
+                      {isAuthenticated ? "Logged-in" : "Logged-out"}
+                    </div>
+                    <ul>
+                      <li style={{ background: theme.ui }}>The Way of kings</li>
+                      <li style={{ background: theme.ui }}>
+                        Power of your subconcious mind
+                      </li>
+                      <li style={{ background: theme.ui }}>The Lean Startup</li>
+                    </ul>
+                  </div>
+                );
+              }}
+            </ThemeContext.Consumer>
           );
         }}
-      </ThemeContext.Consumer>
+      </AuthContext.Consumer>
     );
   }
 }
