@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
+import { BookContext } from "../context/BookContext";
 
 const BookList = () => {
   const { isLightTheme, light, dark } = useContext(ThemeContext);
   const { isAuthenticated, toggleAuth } = useContext(AuthContext);
+  const { books } = useContext(BookContext);
   const theme = isLightTheme ? light : dark;
   return (
     <div
@@ -15,9 +17,13 @@ const BookList = () => {
         {isAuthenticated ? "Logged-in" : "Logged-out"}
       </div>
       <ul>
-        <li style={{ background: theme.ui }}>The Way of kings</li>
-        <li style={{ background: theme.ui }}>Power of your subconcious mind</li>
-        <li style={{ background: theme.ui }}>The Lean Startup</li>
+        {books.map((book) => {
+          return (
+            <li style={{ background: theme.ui }} key={book.id}>
+              {book.bookName}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
